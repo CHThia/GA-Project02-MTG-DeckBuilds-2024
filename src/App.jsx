@@ -1,11 +1,15 @@
+import NavBar from './components/NavBar';
+import HomePage from './pages/HomePage';
+
 import { useState, useEffect } from 'react';
-import SearchPage from './pages/SearchPage';
-import CardListPage from './pages/CardListPage';
+
+import "./CSS/styles.css"
+
 
 export default function App() {
 
   const [cardLists, setCardLists] = useState([]) 
-
+  
   useEffect(() => {
     const mtgUrl = `https://api.magicthegathering.io/v1/cards`;
     
@@ -24,14 +28,26 @@ export default function App() {
     } 
     getAllCards()
   }, [])
-
+  
   return (
     <>
-      <h1>Welcome to Magic The Gathering</h1>
-      <SearchPage />
-      {cardLists.map((cardList, idx) => 
-      <CardListPage key={idx} cardList={cardList} />
-    )}
+      <NavBar />
+      <HomePage cardLists={cardLists}/>
+    
     </>
   )
 }
+
+
+
+//* Import
+// import SearchPage from './pages/SearchPage';
+// import CardListPage from './pages/CardListPage';
+
+//* Return
+
+{/* <SearchPage /> */}
+
+{/* {cardLists.map((cardList, idx) => 
+<CardListPage key={idx} cardList={cardList} />
+)} */}

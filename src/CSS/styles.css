@@ -1,0 +1,12 @@
+.title {
+  text-align: center;
+  font-family: 'Arial';  
+  font-size: 25px;
+  padding: 5px; 
+}
+
+.search-input {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}

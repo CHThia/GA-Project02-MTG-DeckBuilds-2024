@@ -4,7 +4,17 @@ import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 
-export default function Header ({ cardLists }) {
+
+export default function HomePage ({ cardLists, onQuery }) {
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    let keyword = event.target.value
+    let filteredCards = cardLists.filter(card => card.name.includes(keyword))
+    console.log('fi', filteredCards)
+    onQuery(filteredCards)
+  }
+
 
   return (
     <>
@@ -28,12 +38,15 @@ export default function Header ({ cardLists }) {
                 {cardLists.name}
               </Box>
             )}
-            renderInput={(params) => <TextField {...params} label="Search Card..."/>}
+            renderInput={(params) => 
+            <TextField {...params} 
+            label="Search Card..."
+            onChange={handleSearch}
+            />}
           />
         
         </Stack>
       </div>
     </>
   ) 
-
 }

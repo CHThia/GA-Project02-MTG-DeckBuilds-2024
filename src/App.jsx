@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
+import CardListPage from './pages/CardListPage';
 
 import { useState, useEffect } from 'react';
 
@@ -33,6 +34,12 @@ export default function App() {
     <>
       <NavBar />
       <HomePage cardLists={cardLists}/>
+
+      <div className='card-list'>
+        {cardLists.map((cardList, idx) => 
+        <CardListPage key={idx} cardList={cardList} />
+        )}
+      </div>
     
     </>
   )
@@ -40,14 +47,4 @@ export default function App() {
 
 
 
-//* Import
-// import SearchPage from './pages/SearchPage';
-// import CardListPage from './pages/CardListPage';
-
 //* Return
-
-{/* <SearchPage /> */}
-
-{/* {cardLists.map((cardList, idx) => 
-<CardListPage key={idx} cardList={cardList} />
-)} */}

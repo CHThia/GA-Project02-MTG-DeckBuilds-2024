@@ -1,11 +1,11 @@
-//* Import Pages
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
+import DecksCollection from './pages/DecksCollection';
 import CardListPage from './pages/CardListPage';
-//* Import React Libraries
+import { Route, Routes } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-//* Import CSS
-import "./CSS/styles.css"
+import "./CSS/styles.css";
+
 
 
 export default function App() {
@@ -49,15 +49,20 @@ export default function App() {
 
   return (
     <>
-      <NavBar />
-      <HomePage cardLists={cardLists} onQuery={setFilteredCardList}/>
-      
-      <div className='card-list'>
-        {filteredCardList.map((filteredCards, idx) => 
-        <CardListPage key={idx} cardList={filteredCards} />
+        <NavBar />
+        <Routes>
+          <Route path="/Home" 
+          element={<HomePage cardLists={cardLists} 
+          onQuery={setFilteredCardList}/>} 
+          />
+          <Route path="Decks Collection" element={<DecksCollection/>} />
+        </Routes>
+        
+        <div className='card-list'>
+          {filteredCardList.map((filteredCards, idx) => 
+          <CardListPage key={idx} filteredCards={filteredCards} />
         )}
-      </div>
-    
+        </div>
     </>
   )
 }

@@ -1,9 +1,9 @@
 
-export default function CardListPage ({ cardList }) {
+export default function CardListPage ({ filteredCards }) {
   
   return (
     <>
-        <img src={cardList.imageUrl} style={{ width:"150px", padding:"15px"}}/>
+        <img src={filteredCards.imageUrl} style={{ width:"150px", padding:"15px"}}/>
     </>
   )
 } 

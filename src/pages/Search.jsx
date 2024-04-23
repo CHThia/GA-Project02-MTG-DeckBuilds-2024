@@ -13,7 +13,6 @@ export default function HomePage () {
   const [cardLists, setCardLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 50;
 
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function HomePage () {
   }, [currentPage]);
 
   const getAllCards = async (page) => {
-    const mtgUrl = `https://api.magicthegathering.io/v1/cards?page=${page}&pageSize=${pageSize}`;
+    const mtgUrl = `https://api.magicthegathering.io/v1/cards?page=${page}`;
 
     try {
       const res = await fetch(mtgUrl);
@@ -77,7 +76,8 @@ export default function HomePage () {
     setCardLists(filteredCards);
   };
 
-
+  
+  
   return (
     <>
       <div className="title">
@@ -101,23 +101,46 @@ export default function HomePage () {
               </Box>
             )}
             renderInput={(params) => 
-            <TextField {...params} 
-            label="Search Card..." 
-            onChange={handleSearch} />}
+              <TextField {...params} 
+              label="Search Card..." 
+              onChange={handleSearch} 
+              onKeyDown={(event) => {
+                if(event.key === 'Enter') {
+                  handleSearch(event, event.target.value)
+                }
+              }}
+              />
+            }
           />
-        
+  
         </Stack>
       </div>   
       
+      <hr/>
+
       <div className='card-list'>
         {cardLists.map((cardlist, idx) => 
           <CardListPage key={idx} cardlist={cardlist} />
         )}
       </div> 
 
-      {/* Pagination controls */}
-      <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-      <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+      <hr/>
+
+      <div id='page-controls'>
+        <button 
+          style={{ width: "30%" }}
+          onClick={handlePrevPage} 
+          disabled={currentPage === 1}>
+            Previous Page
+        </button>
+
+        <button 
+          style={{ width: "30%" }}
+          onClick={handleNextPage} 
+          disabled={currentPage === totalPages}>
+            Next Page
+        </button>
+      </div>
 
     </>
   ) 

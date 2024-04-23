@@ -11,14 +11,16 @@ import { useState, useEffect } from 'react';
 export default function HomePage () {
   
   const [cardLists, setCardLists] = useState([]);
+  const [filterCardLists, SetfilterCardLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
 
   useEffect(() => {
-
     getAllCards(currentPage);
-  }, [currentPage]);
+    setCardLists(filterCardLists)
+  }, [currentPage, filterCardLists]);
+
 
   const getAllCards = async (page) => {
     const mtgUrl = `https://api.magicthegathering.io/v1/cards?page=${page}`;
@@ -69,15 +71,19 @@ export default function HomePage () {
   };
 
   const handleSearch = (event) => {
+    event.preventDefault()
     const keyword = event.target.value.toLowerCase();
-    const filteredCards = cardLists.filter((card) => {
-      return card.name.toLowerCase().includes(keyword);
-    });
-    setCardLists(filteredCards);
+    if (keyword === ''){
+      SetfilterCardLists(cardLists)
+    } else {
+      const filteredCards = cardLists.filter((card) => 
+        card.name.toLowerCase().includes(keyword)
+      );
+      setCardLists(filteredCards);
+    }
   };
+  
 
-  
-  
   return (
     <>
       <div className="title">
@@ -104,11 +110,6 @@ export default function HomePage () {
               <TextField {...params} 
               label="Search Card..." 
               onChange={handleSearch} 
-              onKeyDown={(event) => {
-                if(event.key === 'Enter') {
-                  handleSearch(event, event.target.value)
-                }
-              }}
               />
             }
           />
@@ -117,12 +118,14 @@ export default function HomePage () {
       </div>   
       
       <hr/>
-
-      <div className='card-list'>
-        {cardLists.map((cardlist, idx) => 
-          <CardListPage key={idx} cardlist={cardlist} />
-        )}
-      </div> 
+      
+      <div className='card-list-container'>
+        <div id='card-list'>
+          {cardLists.map((cardlist, idx) => 
+            <CardListPage key={idx} cardlist={cardlist} />
+          )}
+        </div> 
+      </div>
 
       <hr/>
 

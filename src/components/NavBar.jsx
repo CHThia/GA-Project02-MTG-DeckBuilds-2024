@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
 import { useState } from 'react';
 
 
-const pages = ['Home', 'Decks Collection'];
+const pages = ['Home', 'Decks Collection', 'Create New Deck'];
 
 export default function ResponsiveAppBar() {
 

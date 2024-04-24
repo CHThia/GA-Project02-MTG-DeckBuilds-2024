@@ -1,24 +1,52 @@
-import { useState} from 'react';
+import CardSlots from '../components/CardSlots';
+import { useEffect, useState } from 'react';
 
 
 
 export default function CreateNewDeck (){
 
-  const [searchCard, setSearchCard] = useState([]);
+  const [searchCard, setSearchCard] = useState(""); 
+  const [cardImage, setCardImage] = useState(""); 
 
-  // Create 60 slots for placing cards 
-  const deckTable = [];
-  for(let i = 0; i < 60; i++){
-    deckTable.push(<div key={i} className='card-slot'>Empty Slot</div>)
-  }
+  useEffect(() => {
+
+    const getCardData = async () => {
+      
+      const mtgUrl = `https://api.magicthegathering.io/v1/cards?name=${encodeURIComponent(searchCard)}`;
+
+      try {
+        const res = await fetch(mtgUrl);
+        if (!res.ok) {
+          throw new Error('Failed to fetch card.');
+        }
+        const data = await res.json();
+
+        //* Check if Card name is available
+        if (data.cards && data.cards.length > 0) {
+          setCardImage(data.cards[0].imageUrl); // Show Card Image if there is result
+        } else {
+          setCardImage(""); // Clear Card Image if not result
+        }
+
+      } catch (error) {
+        console.error('Error fetching card:', error);
+      }
+    };
+
+    getCardData();
+  }, [searchCard]);
+
+  const handleSearchCardInput = (event) => {
+    setSearchCard(event.target.value); // Update searchCard state with input value
+  };
 
 
   return (
     <>
       <div className='main-body'>
 
-        {/* Create New Deck Section */}
-        <webform>
+        {/* Create New Deck Inputs */}
+        <form>
 
           <fieldset className='fieldset-container'>
             <legend>Create New Deck</legend>
@@ -37,17 +65,24 @@ export default function CreateNewDeck (){
 
                 <div id="detail-input">
                   <label>Search Card: </label>
-                  <input type='search' style={{width:"100%"}}></input>
+                  <input type='search' 
+                    style={{width:"100%"}}
+                    value={searchCard}
+                    onChange={handleSearchCardInput}></input>
                 </div>
               </div>
 
-              <div id='show-card'></div>
+              <div id='show-card'>
+                {cardImage && <img src={cardImage} />}
+              </div>
         
           </fieldset>
-        </webform>
+        </form>
 
-        <div className='create-deck-container'>{deckTable}</div>
+        {/* Create New Deck Card Slots */}
+        <CardSlots />
 
+        {/* Create New Deck Save Button */}
         <div className='btn-save-container'>
           <button id='save-btn'>Save Deck</button>
         </div>

@@ -26,9 +26,9 @@ export default function HomePage () {
     const mtgUrl = `https://api.magicthegathering.io/v1/cards?page=${page}`;
 
     try {
-      const res = await fetch(mtgUrl);
+      const res = await fetch (mtgUrl);
       if (!res.ok) {
-        throw new Error('Failed to fetch game details');
+        throw new Error('Failed to fetch card list');
       }
       const data = await res.json();
 
@@ -53,7 +53,7 @@ export default function HomePage () {
       const totalPages = lastPage ? parseInt(lastPage[1]) : 1;
       setTotalPages(totalPages);
     } catch (error) {
-      console.error('Error fetching game data:', error);
+      console.error('Error fetching card list data:', error);
     }
   };
 

@@ -62,7 +62,6 @@ export default function CreateNewDeck (){
     event.preventDefault();
     if (cardImage) {
       setAddedCards([...addedCards, cardImage]);
-      setCardImage(""); 
     }
   };
 
@@ -70,31 +69,30 @@ export default function CreateNewDeck (){
     <>
       <div className='main-body'>
 
-        {/* Create New Deck Inputs */}
+
+        {/* Search Card Input */}
+        <div className='search-section'>
+
         <form>
+          <fieldset className='fieldset-deck-name'>
+            <legend>Deck Name Section: </legend>
+              <div id="detail-deck-name">
+                <label>Enter Deck Name: </label>
+                <input type='text' 
+                  placeholder="Example: Deck 1" 
+                  style={{width:"100%"}}>
+                </input>
+              </div>
+          </fieldset>
+        </form>
 
-          <fieldset className='fieldset-container'>
-            <legend>Create New Deck</legend>
+          <fieldset className='fieldset-search'>
+            <legend>Search Section: </legend>
               <div>
-                <div id="detail-input">
-                  <label>Deck Name: </label>
-                  <input type='text' 
-                    placeholder="Example: Deck 1" 
-                    style={{width:"100%"}}>
-                  </input>
-                </div>
-
-                <div id="detail-input">
-                  <label>Create Date: </label>
-                  <input type='date'
-                    placeholder='Input Card Name...' 
-                    pattern="\d{2}-\d{2}-\d{4}" 
-                    style={{width:"100%"}}></input>
-                </div>
-
-                <div id="detail-input">
-                  <label>Search Card: </label>
+                <div id="detail-search">
+                  <label>Search Card Name: </label>
                   <input type='search' 
+                    placeholder="Example: Black Lotus"
                     style={{width:"100%"}}
                     value={searchCard}
                     onChange={handleSearchCardInput}></input>
@@ -112,9 +110,8 @@ export default function CreateNewDeck (){
               <div className='btn-add-container'>
                 <button id='add-btn' onClick={handleAddCard}>ADD CARD</button>
               </div>
-
           </fieldset>
-        </form>
+        </div>
 
         {/* Create New Deck Card Slots */}
         <CardSlots cardImages={addedCards} setAddedCards={setAddedCards} />
@@ -129,3 +126,16 @@ export default function CreateNewDeck (){
     </>
   )
 }
+
+
+
+
+
+//* Input Create Date
+{/* <div id="detail-input">
+  <label>Create Date: </label>
+  <input type='date'
+    placeholder='Input Card Name...' 
+    pattern="\d{2}-\d{2}-\d{4}" 
+    style={{width:"100%"}}></input>
+</div> */}

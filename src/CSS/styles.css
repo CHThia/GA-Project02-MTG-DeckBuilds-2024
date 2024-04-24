@@ -71,17 +71,31 @@
   flex-direction: row;
 }
 
-.fieldset-container{
+.fieldset-deck-name {
   width: 350px;
-  height: 750px;
+  height: 90px;
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 35px;
+  display:flex;
+  flex-direction: column;
+  border-radius: 10px;
+} 
+
+#detail-deck-name {
+  padding: 10px
+}
+
+.fieldset-search{
+  width: 350px;
+  height: 550px;
+  padding: 20px;
+  margin-top: 40px;
   display:flex;
   flex-direction: column;
   border-radius: 10px;
 }
 
-#detail-input{
+#detail-search{
   padding: 10px
 }
 
@@ -89,7 +103,7 @@
   background-color: rgb(221, 221, 221);
   border: 2px solid rgb(0, 0, 0);
   border-radius: 10px;
-  margin: 60px auto;
+  margin: 20px auto;
   width: 280px;
   height: 380px;
   border-radius: 10px;

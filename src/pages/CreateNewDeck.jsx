@@ -1,17 +1,26 @@
 import CardSlots from '../components/CardSlots';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 
 
 export default function CreateNewDeck (){
 
   const [searchCard, setSearchCard] = useState(""); 
-  const [cardImage, setCardImage] = useState(""); 
+  const [cardImage, setCardImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false) 
 
-  useEffect(() => {
+  useMemo (() => {
 
     const getCardData = async () => {
       
+      if(!searchCard) {
+        setCardImage("")
+        setIsLoading(false)
+        return
+      }
+
+      setIsLoading(true)
+
       const mtgUrl = `https://api.magicthegathering.io/v1/cards?name=${encodeURIComponent(searchCard)}`;
 
       try {
@@ -30,6 +39,8 @@ export default function CreateNewDeck (){
 
       } catch (error) {
         console.error('Error fetching card:', error);
+      } finally {
+        setIsLoading(false)
       }
     };
 
@@ -37,7 +48,13 @@ export default function CreateNewDeck (){
   }, [searchCard]);
 
   const handleSearchCardInput = (event) => {
-    setSearchCard(event.target.value); // Update searchCard state with input value
+    const cardNameInput = event.target.value
+    setSearchCard(cardNameInput);
+    if(cardNameInput.trim() === ""){
+      setCardImage("");
+      return
+    }
+
   };
 
 
@@ -53,7 +70,7 @@ export default function CreateNewDeck (){
               <div>
                 <div id="detail-input">
                   <label>Deck Name: </label>
-                  <input type='text' style={{width:"100%"}}></input>
+                  <input type='text' placeholder="Example: Deck 1" style={{width:"100%"}}></input>
                 </div>
 
                 <div id="detail-input">
@@ -66,6 +83,7 @@ export default function CreateNewDeck (){
                 <div id="detail-input">
                   <label>Search Card: </label>
                   <input type='search' 
+                    placeholder='Input Card Name...'
                     style={{width:"100%"}}
                     value={searchCard}
                     onChange={handleSearchCardInput}></input>
@@ -73,7 +91,11 @@ export default function CreateNewDeck (){
               </div>
 
               <div id='show-card'>
-                {cardImage && <img src={cardImage} />}
+                {isLoading? (
+                  <p>Loading... </p>
+                ) : (
+                  cardImage && <img src={cardImage} id='card-image'/>
+                )}
               </div>
         
           </fieldset>

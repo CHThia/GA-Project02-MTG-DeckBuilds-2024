@@ -30,7 +30,9 @@ export default function CreateNewDeck (){
 
                 <div id="detail-input">
                   <label>Create Date: </label>
-                  <input type='date' pattern="\d{2}-\d{2}-\d{4}" style={{width:"100%"}}></input>
+                  <input type='date' 
+                    pattern="\d{2}-\d{2}-\d{4}" 
+                    style={{width:"100%"}}></input>
                 </div>
 
                 <div id="detail-input">
@@ -45,6 +47,10 @@ export default function CreateNewDeck (){
         </webform>
 
         <div className='create-deck-container'>{deckTable}</div>
+
+        <div className='btn-save-container'>
+          <button id='save-btn'>Save Deck</button>
+        </div>
 
       </div>
 

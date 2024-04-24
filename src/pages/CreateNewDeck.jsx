@@ -1,6 +1,6 @@
 import CardSlots from '../components/CardSlots';
 import { useEffect, useState } from 'react';
-
+import Airtable from 'airtable';
 
 
 export default function CreateNewDeck (){
@@ -9,6 +9,35 @@ export default function CreateNewDeck (){
   const [cardImage, setCardImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [addedCards, setAddedCards] = useState([]); 
+  const [deckName, setDeckName] = useState("");
+
+
+  
+  //* Function to save deck data to Airtable
+  const saveDeckToAirtable = async () => {
+    const base = new Airtable({ 
+      apiKey: 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f' })
+      .base('appDX6At2SO9TJoNE');
+    const dataTable = 'tblEx46sKK00u8Tst'
+    const deckNameInput = deckName;
+    const currentdate = new Date();
+    const formattedDate = currentdate.toISOString();
+
+    try {
+      await base(dataTable).create({
+        "ID": 2,
+        "Create By": "CJ Thia",
+        "Create Date": formattedDate,
+        "Last Update By": "CJ Thia",
+        "Last Updated Date": null,
+        "Deck Name": deckNameInput,
+        "List of Cards": addedCards.join(', ') // Assuming addedCards is an array of card names
+      });
+      console.log('Deck saved to Airtable successfully.');
+    } catch (error) {
+      console.error('Error saving deck to Airtable:', error);
+    }
+  };
 
 
   useEffect(() => {
@@ -65,6 +94,16 @@ export default function CreateNewDeck (){
     }
   };
 
+  const handleSaveDeck = (event) => {
+    event.preventDefault();
+    saveDeckToAirtable();
+  };
+
+  const handleDeckNameChange = (event) => {
+    setDeckName(event.target.value);
+  }
+
+
   return (
     <>
       <div className='main-body'>
@@ -80,7 +119,9 @@ export default function CreateNewDeck (){
                 <label>Enter Deck Name: </label>
                 <input type='text' 
                   placeholder="Example: Deck 1" 
-                  style={{width:"100%"}}>
+                  style={{width:"100%"}}
+                  value={deckName}
+                  onChange={handleDeckNameChange}>
                 </input>
               </div>
           </fieldset>
@@ -118,7 +159,7 @@ export default function CreateNewDeck (){
 
         {/* Create New Deck Save Button */}
         <div className='btn-save-container'>
-          <button id='save-btn'>Save Deck</button>
+          <button id='save-btn' onClick={handleSaveDeck}>Save Deck</button>
         </div>
 
       </div>
@@ -126,16 +167,3 @@ export default function CreateNewDeck (){
     </>
   )
 }
-
-
-
-
-
-//* Input Create Date
-{/* <div id="detail-input">
-  <label>Create Date: </label>
-  <input type='date'
-    placeholder='Input Card Name...' 
-    pattern="\d{2}-\d{2}-\d{4}" 
-    style={{width:"100%"}}></input>
-</div> */}

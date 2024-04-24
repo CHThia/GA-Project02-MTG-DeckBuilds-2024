@@ -7,7 +7,9 @@ export default function CreateNewDeck (){
 
   const [searchCard, setSearchCard] = useState(""); 
   const [cardImage, setCardImage] = useState("");
-  const [isLoading, setIsLoading] = useState(false) 
+  const [isLoading, setIsLoading] = useState(false);
+  const [addedCards, setAddedCards] = useState([]); 
+
 
   useEffect(() => {
 
@@ -56,6 +58,13 @@ export default function CreateNewDeck (){
     } 
   };
 
+  const handleAddCard = (event) => {
+    event.preventDefault();
+    if (cardImage) {
+      setAddedCards([...addedCards, cardImage]);
+      setCardImage(""); 
+    }
+  };
 
   return (
     <>
@@ -69,7 +78,10 @@ export default function CreateNewDeck (){
               <div>
                 <div id="detail-input">
                   <label>Deck Name: </label>
-                  <input type='text' placeholder="Example: Deck 1" style={{width:"100%"}}></input>
+                  <input type='text' 
+                    placeholder="Example: Deck 1" 
+                    style={{width:"100%"}}>
+                  </input>
                 </div>
 
                 <div id="detail-input">
@@ -91,17 +103,21 @@ export default function CreateNewDeck (){
 
               <div id='show-card'>
                 {isLoading? (
-                    <p>Loading... </p>
+                    <p>Image is Loading... </p>
                   ) : (
                     cardImage && <img src={cardImage} id='card-image'/>
                   )}
               </div>
-        
+              
+              <div className='btn-add-container'>
+                <button id='add-btn' onClick={handleAddCard}>ADD CARD</button>
+              </div>
+
           </fieldset>
         </form>
 
         {/* Create New Deck Card Slots */}
-        <CardSlots />
+        <CardSlots cardImages={addedCards} setAddedCards={setAddedCards} />
 
         {/* Create New Deck Save Button */}
         <div className='btn-save-container'>

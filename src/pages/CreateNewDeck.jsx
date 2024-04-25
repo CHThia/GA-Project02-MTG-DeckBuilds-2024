@@ -1,6 +1,6 @@
 import CardSlots from '../components/CardSlots';
 import { useEffect, useState } from 'react';
-import Airtable from 'airtable';
+
 
 
 export default function CreateNewDeck (){
@@ -11,35 +11,53 @@ export default function CreateNewDeck (){
   const [addedCards, setAddedCards] = useState([]); 
   const [deckName, setDeckName] = useState("");
 
-
   
-  //* Function to save deck data to Airtable
   const saveDeckToAirtable = async () => {
-    const base = new Airtable({ 
-      apiKey: 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f' })
-      .base('appDX6At2SO9TJoNE');
-    const dataTable = 'tblEx46sKK00u8Tst'
-    const deckNameInput = deckName;
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const baseId = import.meta.env.VITE_BASE_ID;
+    const dataTable = import.meta.env.VITE_DATA_TABLE;
+
+    const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
+
     const currentdate = new Date();
     const formattedDate = currentdate.toISOString();
 
+    const deckNameInput = deckName;
+
+    const requestBody = {
+        fields: {
+            "ID": 2,
+            "Create By": "CJ Thia",
+            "Create Date": formattedDate,
+            "Last Update By": "CJ Thia",
+            "Last Updated Date": null,
+            "Deck Name": deckNameInput,
+            "List of Cards": addedCards.join(', ')
+        }
+    };
+
     try {
-      await base(dataTable).create({
-        "ID": 2,
-        "Create By": "CJ Thia",
-        "Create Date": formattedDate,
-        "Last Update By": "CJ Thia",
-        "Last Updated Date": null,
-        "Deck Name": deckNameInput,
-        "List of Cards": addedCards.join(', ') // Assuming addedCards is an array of card names
-      });
-      console.log('Deck saved to Airtable successfully.');
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (response.ok) {
+            console.log('Deck saved to Airtable successfully.');
+        } else {
+            console.error('Failed to save deck to Airtable:', response.statusText);
+        }
     } catch (error) {
-      console.error('Error saving deck to Airtable:', error);
+        console.error('Error saving deck to Airtable:', error);
     }
-  };
+};
 
 
+  //* Fetch Card based on card name input 
   useEffect(() => {
 
     const getCardData = async () => {
@@ -78,6 +96,7 @@ export default function CreateNewDeck (){
     getCardData();
   }, [searchCard]);
 
+
   const handleSearchCardInput = (event) => {
     const cardNameInput = event.target.value
     setSearchCard(cardNameInput);
@@ -107,7 +126,6 @@ export default function CreateNewDeck (){
   return (
     <>
       <div className='main-body'>
-
 
         {/* Search Card Input */}
         <div className='search-section'>

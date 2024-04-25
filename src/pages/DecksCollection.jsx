@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 
+
 export default function DecksCollection (){
 
   const [allDecks, setAllDecks] = useState([]);
@@ -56,8 +57,8 @@ export default function DecksCollection (){
         try {
             const response = await fetch(url, {
                 headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
+                  'Authorization': `Bearer ${apiKey}`,
+                  'Content-Type': 'application/json'
                 },
             });
     
@@ -90,6 +91,63 @@ export default function DecksCollection (){
     setSelectDeck(deckName);
   }
 
+
+  const handleDeleteDeck = async () => {
+    if (!selectDeck) return;
+  
+    const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
+    const baseId = 'appDX6At2SO9TJoNE';
+    const dataTable = 'tblEx46sKK00u8Tst';
+    const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
+  
+    try {
+      // Fetch the record ID of the selected deck
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        // Find the record ID of the selected deck
+        const deckRecord = data.records.find(record => record.fields["Deck Name"] === selectDeck);
+        if (!deckRecord) {
+          console.error(`Deck '${selectDeck}' not found in Airtable.`);
+          return;
+        }
+        
+        const deckId = deckRecord.id;
+  
+        // Construct URL for DELETE request with the record ID
+        const deleteUrl = `${url}/${deckId}`;
+  
+        // Send DELETE request
+        const deleteResponse = await fetch(deleteUrl, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+          },
+        });
+  
+        if (deleteResponse.ok) {
+          console.log(`Deck '${selectDeck}' deleted successfully.`);
+          // Update state to remove the deleted deck
+          setAllDecks(prevDecks => prevDecks.filter(deck => deck !== selectDeck));
+          setSelectDeck(null);
+          setDeckCards([]);
+        } else {
+          console.error('Failed to delete deck from Airtable:', deleteResponse.statusText);
+        }
+      } else {
+        console.error('Failed to fetch records from Airtable:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting deck from Airtable:', error);
+    }
+  };
+  
   
   return (
     <>
@@ -103,10 +161,10 @@ export default function DecksCollection (){
               <p className="icon-deck-name">{deckName}</p>
             </div>
           ))}
+
         </div>
 
         <div className="show-save-deck">
-
           <div className="card-container">
             <div className="card-list">
               {deckCards.length > 0 ? (
@@ -118,9 +176,12 @@ export default function DecksCollection (){
               )}
             </div>
           </div>
-
         </div>
-        
+
+            <div className="btn-remove-container">
+              <button id="delete-btn" onClick={handleDeleteDeck}>Delete Deck</button>
+            </div>
+            
       </div>
     </>
   )

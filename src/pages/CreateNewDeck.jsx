@@ -13,9 +13,14 @@ export default function CreateNewDeck (){
 
   
   const saveDeckToAirtable = async () => {
-    const apiKey = import.meta.env.VITE_API_KEY;
-    const baseId = import.meta.env.VITE_BASE_ID;
-    const dataTable = import.meta.env.VITE_DATA_TABLE;
+    const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
+    const baseId = 'appDX6At2SO9TJoNE';
+    const dataTable = 'tblEx46sKK00u8Tst';
+
+    //* For Vite (Working Properly)
+    // const apiKey = import.meta.env.VITE_API_KEY;
+    // const baseId = import.meta.env.VITE_BASE_ID;
+    // const dataTable = import.meta.env.VITE_DATA_TABLE;
 
     const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
 

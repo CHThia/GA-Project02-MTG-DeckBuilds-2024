@@ -3,7 +3,9 @@ export default function EditDeck (){
 
   return (
     <>
-      <h1>Edit Deck</h1>
+      <div>
+        <h1 style={{textAlign:"center"}}>Edit Deck</h1>
+      </div>
     </>
   )
 }

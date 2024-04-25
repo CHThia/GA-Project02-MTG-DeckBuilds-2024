@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 
 
 export default function DecksCollection (){
 
-  const [allDecks, setAllDecks] = useState([]);
-  const [selectDeck, setSelectDeck] = useState(null);
+  const [allDecks, setAllDecks] = useState([])
+  const [selectDeck, setSelectDeck] = useState(null)
   const [deckCards, setDeckCards] = useState([])
+
+  const navigate = useNavigate()
  
 
   //* To retrieve the store data from AirTable
@@ -91,7 +94,7 @@ export default function DecksCollection (){
     setSelectDeck(deckName);
   }
 
-
+  //* To Delete Deck from AirTable by selected deck 
   const handleDeleteDeck = async () => {
     if (!selectDeck) return;
   
@@ -148,6 +151,9 @@ export default function DecksCollection (){
     }
   };
   
+  const handleEditDeckClick = () => {
+    navigate('/Edit Deck')
+  }
   
   return (
     <>
@@ -161,6 +167,12 @@ export default function DecksCollection (){
               <p className="icon-deck-name">{deckName}</p>
             </div>
           ))}
+
+          <hr/>
+
+          <div className="btn-edit-Container">
+              <button id="edit-btn" onClick={handleEditDeckClick}>Edit Deck</button>
+          </div>
 
         </div>
 
@@ -178,9 +190,9 @@ export default function DecksCollection (){
           </div>
         </div>
 
-            <div className="btn-remove-container">
-              <button id="delete-btn" onClick={handleDeleteDeck}>Delete Deck</button>
-            </div>
+        <div className="btn-remove-container">
+          <button id="delete-btn" onClick={handleDeleteDeck}>Delete Deck</button>
+        </div>
             
       </div>
     </>

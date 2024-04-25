@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import HomePage from './pages/Search';
 import DecksCollection from './pages/DecksCollection';
 import CreateNewDeck from './pages/CreateNewDeck';
+import EditDeck from './pages/EditDeck';
 import "./CSS/styles.css";
 
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/Home" element={<HomePage/>} />
         <Route path="Decks Collection" element={<DecksCollection/>} />
         <Route path="Create New Deck" element={<CreateNewDeck/>} />
+        <Route path="Edit Deck" element={<EditDeck/>} />
       </Routes>
       
     </>

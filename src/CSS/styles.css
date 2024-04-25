@@ -63,6 +63,15 @@
   text-align: center;
 }
 
+.btn-edit-Container {
+  display: flex;
+  padding: 20px;
+}
+
+#edit-btn {
+  border-radius: 10px;
+}
+
 .show-save-deck {
   background-color: rgb(199, 199, 199);
   max-width: 60%;

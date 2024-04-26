@@ -1,11 +1,11 @@
 
-export default function CardSlotsEdit ({ cardImageUrls, setAddedCards }) {
+export default function CardSlotsEdit ({ cardImageUrls, setcardImageUrls }) {
 
-  const handleRemoveCard = (index) => {
+  const handleRemoveCard = (event, index) => {
+    event.preventDefault()
     const newCardImages = [...cardImageUrls];
-    newCardImages.splice(index, 1);
-    setAddedCards(newCardImages)
-    console.log(newCardImages)
+    newCardImages.splice(index, 1)
+    setcardImageUrls(newCardImages)
   }
 
   // Create 60 slots for placing cards 
@@ -17,7 +17,7 @@ export default function CardSlotsEdit ({ cardImageUrls, setAddedCards }) {
           <img src={cardImageUrls[i]} 
             alt={`Card ${i + 1}`} 
             className="card-slot"
-            onClick={() => handleRemoveCard(i)}
+            onClick={(e) => handleRemoveCard(e, i)}
           />
         ) : (
           "Empty Slot"

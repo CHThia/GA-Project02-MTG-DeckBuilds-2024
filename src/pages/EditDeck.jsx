@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'
 
 
+
 export default function CreateNewDeck (){
 
   const location = useLocation();
@@ -11,92 +12,10 @@ export default function CreateNewDeck (){
   const [cardImage, setCardImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [addedCards, setAddedCards] = useState([]); 
-  const [deckName, setDeckName] = useState(state.deckName);
   const [cardImageUrls, setcardImageUrls] = useState(state.deckData.fields['List of Cards'])
-  // const [selectDeckName, setSelectDeckName] = useState([])
+
 
   
-  //* Retrieve Options List for Deck Names
-  // useEffect(() => {
-  //   const getDeckNames = async () => {
-  //   const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
-  //   const baseId = 'appDX6At2SO9TJoNE';
-  //   const dataTable = 'tblEx46sKK00u8Tst';
-    
-  //   const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
-    
-  //     try {
-  //       const response = await fetch(url, {
-  //         headers: {
-  //           'Authorization': `Bearer ${apiKey}`
-  //         }
-  //       });
-    
-  //       if (!response.ok) {
-  //         throw new Error('Failed to fetch deck names from Airtable.');
-  //       }
-    
-  //       const data = await response.json();
-  //       const decks = data.records.map(record => record.fields['Deck Name']);
-    
-  //       setSelectDeckName(decks);
-  //     } catch (error) {
-  //       console.error('Error fetching deck names:', error);
-  //     }
-  //   };
-  
-  //   getDeckNames();
-  // }, []);
-
-
-  //* To get List of Cards (Arr) from selected Deck Name
-  // useEffect(() => {
-  //   // let currentDeckName = state.deckName
-  //   // let imageURLs = state['deckData']['List of Cards']
-  //   // setDeckName(currentDeckName);
-  //   // setcardImageUrls(imageURLs)
-  //   // console.log('pp', deckName, cardImageUrls)
-  //   // const getcardImageUrls = async () => {
-  //   //   if (deckName) {
-  //   //     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
-  //   //     const baseId = 'appDX6At2SO9TJoNE';
-  //   //     const dataTable = 'tblEx46sKK00u8Tst';
-
-  //   //     const url = `https://api.airtable.com/v0/${baseId}/${dataTable}?filterByFormula=({Deck Name}="${deckName}")`;
-
-  //   //     try {
-  //   //       const response = await fetch(url, {
-  //   //         headers: {
-  //   //           'Authorization': `Bearer ${apiKey}`
-  //   //         }
-  //   //       });
-
-  //   //       if (!response.ok) {
-  //   //         throw new Error('Failed to fetch deck cards from Airtable.');
-  //   //       }
-
-  //   //       const data = await response.json();
-  //   //       //* Retreive and tidy List of Cards from String to Array
-  //   //       const cards = data.records.map((record) => record.fields["List of Cards"]);
-  //   //       const splitCardImages = cards.flat().map(cardImageUrlString => 
-  //   //       cardImageUrlString.split(',').map(cardImageUrl => cardImageUrl.trim()));
-  //   //       const cardImagesArr = splitCardImages.flat();
-          
-  //   //       console.log("CardArr", cardImagesArr) 
-  //   //       console.log("Deck Name:", deckName)
-
-  //   //       // Update state with fetched card URLs
-  //   //       setcardImageUrls(cardImagesArr);
-  //   //     } catch (error) {
-  //   //       console.error('Error fetching deck card URLs:', error);
-  //   //     }
-  //   //   }
-  //   // };
-
-  //   // getcardImageUrls();
-  // }, [state, deckName, cardImageUrls]);
-
-
   //* CHANGE TO UPDATE
   const updateDeckToAirtable = async () => {
     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
@@ -196,10 +115,6 @@ export default function CreateNewDeck (){
     updateDeckToAirtable();
   };
 
-  // const handleDeckNameChange = (event) => {
-  //   setDeckName(event.target.value);
-  // }
-
 
   return (
     <>
@@ -210,21 +125,6 @@ export default function CreateNewDeck (){
 
         {/* Search Deck & Search Card */}
         <div className='search-section'>
-
-        {/* <form>
-          <fieldset className='fieldset-deck-name'>
-            <legend>Deck Selection: </legend>
-              <div id="detail-deck-name">
-                <label>Search Existing Deck: </label>
-                <select value={deckName} style={{width:"100%"}} onChange={handleDeckNameChange}>
-                    <option value="" >Select a deck</option>
-                      {selectDeckName.map((dName, index) => (
-                    <option key={index} value={dName}>{dName}</option>
-                    ))}
-                  </select>
-              </div>
-          </fieldset>
-        </form> */}
 
           <fieldset className='fieldset-search'>
             <legend>Search Section: </legend>
@@ -254,11 +154,9 @@ export default function CreateNewDeck (){
         </div>
 
         {/* Update Deck Card Slots */}
-
-        
         <CardSlotsEdit 
           cardImageUrls={cardImageUrls} 
-          setAddedCards={setAddedCards}  
+          setcardImageUrls={setcardImageUrls}  
         />
 
         {/* Create New Deck Save Button */}

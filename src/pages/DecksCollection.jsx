@@ -168,12 +168,6 @@ export default function DecksCollection (){
             </div>
           ))}
 
-          <hr/>
-
-          <div className="btn-edit-Container">
-              <button id="edit-btn" onClick={handleEditDeckClick}>Edit Deck</button>
-          </div>
-
         </div>
 
         <div className="show-save-deck">
@@ -190,7 +184,8 @@ export default function DecksCollection (){
           </div>
         </div>
 
-        <div className="btn-remove-container">
+        <div className="btn-delete-or-edit-container">
+          <button id="edit-btn" onClick={handleEditDeckClick}>Edit Deck</button>
           <button id="delete-btn" onClick={handleDeleteDeck}>Delete Deck</button>
         </div>
             

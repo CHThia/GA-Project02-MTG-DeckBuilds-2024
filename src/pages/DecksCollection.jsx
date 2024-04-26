@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom"
 
 
 export default function DecksCollection (){
@@ -6,8 +7,13 @@ export default function DecksCollection (){
   const [allDecks, setAllDecks] = useState([])
   const [selectDeck, setSelectDeck] = useState(null)
   const [deckCards, setDeckCards] = useState([])
+  const [selectedDeckData, setSelectedDeckData] = useState([])
 
   
+  const navigate = useNavigate()
+  const params = useParams()
+  
+
   //* To retrieve the store data from AirTable
   useEffect(() => {
       const getDecksFromAirtable = async () => {
@@ -27,14 +33,22 @@ export default function DecksCollection (){
     
             if (response.ok) {
                 const data = await response.json();
+
                 const deckNames = data.records.map((record) => record.fields["Deck Name"]);
                 setAllDecks(deckNames);
-                console.log('All decks retreived from Airtable is successfully.');
+                navigate(`/decks/${deckNames[0]}`)
+                let deckSet = cleanCardData(data.records[0])
+                setDeckCards(deckSet);
+                data.records[0]['fields']['List of Cards'] = deckSet
+                console.log(data.records[0])
+                setSelectedDeckData(data.records[0])
+
+                console.log('All Data retreived from Airtable is successfully.');
             } else {
-                console.error('Failed to retreive all decks from Airtable:', response.statusText);
+                console.error('Failed to retreive all Data from Airtable:', response.statusText);
             }
         } catch (error) {
-            console.error('Error retreiving all decks from Airtable:', error);
+            console.error('Error retreiving all Data from Airtable:', error);
         }
     };
     
@@ -63,18 +77,17 @@ export default function DecksCollection (){
     
             if (response.ok) {
               const data = await response.json();
-              
-              //* Retreive and tidy List of Cards from String to Array
-              const cards = data.records.map((record) => record.fields["List of Cards"]);
-              const splitCardImages = cards.flat().map(cardImageUrlString => 
-                cardImageUrlString.split(',').map(cardImageUrl => cardImageUrl.trim()));
-              const cardImagesArr = splitCardImages.flat();
-                
-              setDeckCards(cardImagesArr);
 
-              console.log('All cards retreived from Airtable is successfully.');
+              const cardImagesArr = cleanCardData(data.records[0])
+              setDeckCards(cardImagesArr);
+              navigate(`/decks/${selectDeck}`)
+              let listOfCardImages = cleanCardData(data.records[0])
+              data.records[0]['fields']['List of Cards'] = listOfCardImages 
+              setSelectedDeckData(data.records[0])
+
+              console.log('All card-images retreived from Airtable is successfully.');
             } else {
-              console.error('Failed to retreive cards from Airtable:', response.statusText);
+              console.error('Failed to retreive card-images from Airtable:', response.statusText);
             }
           } catch (error) {
               console.error('Error retreiving cards from Airtable:', error);
@@ -83,11 +96,25 @@ export default function DecksCollection (){
       
     getCardsFromAirtable()
     }
-  }, [selectDeck])
+  }, [selectDeck, navigate])
 
 
   const handleDeckClick = (deckName) => {
     setSelectDeck(deckName);
+  }
+
+  const cleanCardData = (cardObj) => {
+        let cards = cardObj['fields']['List of Cards']
+        let splitCardImages = cards.split(',').map(cardImageUrl => cardImageUrl.trim())
+        return splitCardImages;
+  }
+
+  const handleEditDeck = (event) => {
+    event.preventDefault();
+    console.log('selectedDeckData', selectedDeckData)
+    let {deckName} = params;
+    navigate(`/decks/${deckName}/edit`, {state: {deckName: deckName, deckData: selectedDeckData} }) 
+    //add selectedDeckData to pass to next component
   }
 
 
@@ -179,6 +206,7 @@ export default function DecksCollection (){
         </div>
 
         <div className="btn-delete-container">
+          <button id="edit-btn" onClick={handleEditDeck}>Edit Deck</button>
           <button id="delete-btn" onClick={handleDeleteDeck}>Delete Deck</button>
         </div>
             

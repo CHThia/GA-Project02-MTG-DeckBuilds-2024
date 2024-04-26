@@ -1,5 +1,5 @@
 
-export default function ImageModal ({ imageUrl, onClose }) {
+export default function ImageEnlarge ({ imageUrl, onClose }) {
 
   return (
     <div className="image-overlay" onClick={onClose}>

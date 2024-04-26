@@ -1,10 +1,11 @@
 
-export default function CardSlots ({ cardImages, setAddedCards }) {
+export default function CardSlotsEdit ({ cardImageUrls, setAddedCards }) {
 
   const handleRemoveCard = (index) => {
-    const newCardImages = [...cardImages];
+    const newCardImages = [...cardImageUrls];
     newCardImages.splice(index, 1);
     setAddedCards(newCardImages)
+    console.log(newCardImages)
   }
 
   // Create 60 slots for placing cards 
@@ -12,8 +13,8 @@ export default function CardSlots ({ cardImages, setAddedCards }) {
   for (let i = 0; i < 60; i++) {
     deckTable.push(
       <div key={i} className='card-slot'>
-        {i < cardImages.length ? (
-          <img src={cardImages[i]} 
+        {i < cardImageUrls.length ? (
+          <img src={cardImageUrls[i]} 
             alt={`Card ${i + 1}`} 
             className="card-slot"
             onClick={() => handleRemoveCard(i)}

@@ -5,16 +5,17 @@ import { useState } from "react";
 
 export default function CardListPage ({ cardlist }) {
 
-  const [showModal, setShowModal] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
 
+  
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
-    setShowModal(true);
+    setShowImage(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeImage = () => {
+    setShowImage(false);
   };
 
   return (
@@ -26,8 +27,8 @@ export default function CardListPage ({ cardlist }) {
         />
       </div>
       
-      {showModal && (
-        <ImageEnlarge imageUrl={selectedImage} onClose={closeModal} />
+      {showImage && (
+        <ImageEnlarge imageUrl={selectedImage} onClose={closeImage} />
       )}
     </>
   )

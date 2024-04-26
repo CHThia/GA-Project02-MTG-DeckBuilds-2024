@@ -16,10 +16,9 @@ export default function App() {
       
       <Routes>
         <Route path="/" element={<HomePage/>} />
-        <Route path="/Home" element={<HomePage/>} />
-        <Route path="Decks Collection" element={<DecksCollection/>} />
-        <Route path="Create New Deck" element={<CreateNewDeck/>} />
-        <Route path="Edit Deck" element={<EditDeck/>} />
+        <Route path="/decks/:deckName" element={<DecksCollection/>} />
+        <Route path="/decks/create" element={<CreateNewDeck/>} />
+        <Route path="/decks/:deckName/edit" element={<EditDeck/>} />
       </Routes>
       
     </>

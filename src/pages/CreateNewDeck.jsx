@@ -1,4 +1,4 @@
-import CardSlots from '../components/CardSlots';
+import CardSlotsAdd from '../components/CardSlotsAdd';
 import { useEffect, useState } from 'react';
 
 
@@ -26,17 +26,16 @@ export default function CreateNewDeck (){
 
     const currentdate = new Date();
     const formattedDate = currentdate.toISOString();
-
-    const deckNameInput = deckName;
+    
 
     const requestBody = {
         fields: {
-            "ID": 2,
+            // "ID": 2,
             "Create By": "CJ Thia",
             "Create Date": formattedDate,
             "Last Update By": "CJ Thia",
             "Last Updated Date": null,
-            "Deck Name": deckNameInput,
+            "Deck Name": deckName,
             "List of Cards": addedCards.join(', ')
         }
     };
@@ -178,7 +177,7 @@ export default function CreateNewDeck (){
         </div>
 
         {/* Create New Deck Card Slots */}
-        <CardSlots cardImages={addedCards} setAddedCards={setAddedCards} />
+        <CardSlotsAdd cardImages={addedCards} setAddedCards={setAddedCards} />
 
         {/* Create New Deck Save Button */}
         <div className='btn-save-container'>

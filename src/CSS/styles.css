@@ -68,7 +68,6 @@
   padding: 20px;
 }
 
-
 .show-save-deck {
   background-color: rgb(199, 199, 199);
   max-width: 60%;
@@ -106,13 +105,29 @@
   transform: translateX(-50%);
 }
 
+#edit-btn {
+  background-color: rgb(24, 182, 19);
+  color: rgb(255, 255, 255);
+  width: 25%;
+  height: 50px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#edit-btn:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(24, 182, 19);
+}
+
 #delete-btn {
   background-color: rgb(255, 255, 255);
   color: rgb(220, 20, 60);
   width: 25%;
   height: 50px;
   border-radius: 30px;
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 #delete-btn:hover {

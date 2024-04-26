@@ -12,7 +12,10 @@ import { Link } from "react-router-dom"
 import { useState } from 'react';
 
 
-const pages = ['Home', 'Decks Collection', 'Create New Deck', 'Edit Deck'];
+const pages = [{'path':'/', 'pageName': 'Home'}, 
+                {'path': '/decks/${deckName}', 'pageName': 'Decks'}, 
+                {'path': '/decks/create', 'pageName': 'Create Decks'} 
+              ];
 
 export default function ResponsiveAppBar() {
 
@@ -69,9 +72,9 @@ export default function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page.pageName} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link style={{textDecoration:'none', color:'white'}} to={`/${page}`}>{page}</Link>
+                    <Link style={{textDecoration:'none', color:'#303030'}} to={`${page.path}`}>{page.pageName}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -83,11 +86,11 @@ export default function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.pageName}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link style={{textDecoration:'none', color:'white'}} to={`/${page}`}>{page}</Link>
+                <Link style={{textDecoration:'none', color:'white'}} to={`${page.path}`}>{page.pageName}</Link>
               </Button>
             ))}
           </Box>

@@ -9,17 +9,47 @@ export default function EditDeck (){
   const [isLoading, setIsLoading] = useState(false);
   const [addedCards, setAddedCards] = useState([]); 
   const [deckName, setDeckName] = useState("");
-
   
+  const [selectDeckName, setSelectDeckName] = useState([]);
+
+
+  useEffect(() => {
+    const getDeckNames = async () => {
+    const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
+    const baseId = 'appDX6At2SO9TJoNE';
+    const dataTable = 'tblEx46sKK00u8Tst';
+    
+    const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
+    
+      try {
+        const response = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${apiKey}`
+          }
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch deck names from Airtable.');
+        }
+    
+        const data = await response.json();
+        const decks = data.records.map(record => record.fields['Deck Name']);
+    
+        setSelectDeckName(decks);
+      } catch (error) {
+        console.error('Error fetching deck names:', error);
+      }
+    };
+  
+    getDeckNames();
+  }, []);
+  
+
+  //* CHANGE TO UPDATE 
   const saveDeckToAirtable = async () => {
     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
     const baseId = 'appDX6At2SO9TJoNE';
     const dataTable = 'tblEx46sKK00u8Tst';
-
-    //* For Vite (Working Properly)
-    // const apiKey = import.meta.env.VITE_API_KEY;
-    // const baseId = import.meta.env.VITE_BASE_ID;
-    // const dataTable = import.meta.env.VITE_DATA_TABLE;
 
     const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
 
@@ -140,15 +170,15 @@ export default function EditDeck (){
 
         <form>
           <fieldset className='fieldset-deck-name'>
-            <legend>Deck Name Section: </legend>
+            <legend>Decks Selection: </legend>
               <div id="detail-deck-name">
-                <label>Enter Deck Name: </label>
-                <input type='text' 
-                  placeholder="Example: Deck 1" 
-                  style={{width:"100%"}}
-                  value={deckName}
-                  onChange={handleDeckNameChange}>
-                </input>
+                <label>Search Deck Name: </label>
+                  <select value={deckName} onChange={handleDeckNameChange}>
+                    <option value="">Select a deck</option>
+                      {selectDeckName.map((dName, index) => (
+                    <option key={index} value={dName}>{dName}</option>
+                    ))}
+                  </select>
               </div>
           </fieldset>
         </form>

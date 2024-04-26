@@ -92,7 +92,7 @@
   border-radius: 30px;
 }
 
-.btn-delete-or-edit-container{
+.btn-delete-container{
   background-color: rgba(37, 36, 36, 0.75);
   width: 30%;
   padding: 20px;
@@ -105,21 +105,6 @@
   left: 50%;
   transform: translateX(-50%);
 }
-
-#edit-btn {
-  background-color: rgb(33, 192, 19);
-  color: rgb(255, 255, 255);
-  width: 25%;
-  height: 50px;
-  border-radius: 30px;
-  font-size: 20px;
-}
-
-#edit-btn:hover {
-  background-color: rgb(255, 255, 255);;
-  color: rgb(33, 192, 19);
-}
-
 
 #delete-btn {
   background-color: rgb(255, 255, 255);

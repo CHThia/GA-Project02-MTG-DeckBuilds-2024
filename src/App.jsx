@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/Home" element={<HomePage/>} />
         <Route path="Decks Collection" element={<DecksCollection/>} />
         <Route path="Create New Deck" element={<CreateNewDeck/>} />
-        <Route path="Edit-Deck" element={<EditDeck/>} />
+        <Route path="Edit Deck" element={<EditDeck/>} />
       </Routes>
       
     </>

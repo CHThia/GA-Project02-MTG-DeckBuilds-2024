@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
+
 
 
 export default function DecksCollection (){
@@ -10,7 +10,7 @@ export default function DecksCollection (){
   const [deckCards, setDeckCards] = useState([])
 
   const navigate = useNavigate()
- 
+
 
   //* To retrieve the store data from AirTable
   useEffect(() => {
@@ -94,6 +94,7 @@ export default function DecksCollection (){
     setSelectDeck(deckName);
   }
 
+
   //* To Delete Deck from AirTable by selected deck 
   const handleDeleteDeck = async () => {
     if (!selectDeck) return;
@@ -151,10 +152,13 @@ export default function DecksCollection (){
     }
   };
   
+
   const handleEditDeckClick = () => {
-    navigate('/Edit Deck')
+    navigate(`/Edit-Deck?deckName=${encodeURIComponent(selectDeck)}&
+      deckCards=${encodeURIComponent(JSON.stringify(deckCards))}`)
   }
   
+
   return (
     <>
       <div className="deck-collection-body">

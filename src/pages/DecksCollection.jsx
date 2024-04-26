@@ -154,11 +154,10 @@ export default function DecksCollection (){
   
 
   const handleEditDeckClick = () => {
-    navigate(`/Edit-Deck?deckName=${encodeURIComponent(selectDeck)}&
-      deckCards=${encodeURIComponent(JSON.stringify(deckCards))}`)
+    navigate(`/Edit-Deck?deckName=${encodeURIComponent(selectDeck)}`)
   }
-  
 
+  
   return (
     <>
       <div className="deck-collection-body">

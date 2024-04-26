@@ -1,11 +1,8 @@
-import CardSlots from '../components/CardSlots'
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import CardSlots from '../components/CardSlots';
+import { useEffect, useState } from 'react';
+
 
 export default function EditDeck (){
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
 
   const [searchCard, setSearchCard] = useState(""); 
   const [cardImage, setCardImage] = useState("");
@@ -13,27 +10,16 @@ export default function EditDeck (){
   const [addedCards, setAddedCards] = useState([]); 
   const [deckName, setDeckName] = useState("");
 
-
-  useEffect(() => {
-    const deckNameParam = queryParams.get("deckName");
-    const deckCardsParam = queryParams.get("deckCards");
-    
-    setDeckName(deckNameParam);
-    setAddedCards(prevState => {
-      const parsedDeckCards = JSON.parse(deckCardsParam) || [];
-      // Only update if deckCardsParam has changed
-      if (JSON.stringify(prevState) !== JSON.stringify(parsedDeckCards)) {
-        return parsedDeckCards;
-      }
-      return prevState;
-    });
-  }, [queryParams]);
-
   
   const saveDeckToAirtable = async () => {
     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
     const baseId = 'appDX6At2SO9TJoNE';
     const dataTable = 'tblEx46sKK00u8Tst';
+
+    //* For Vite (Working Properly)
+    // const apiKey = import.meta.env.VITE_API_KEY;
+    // const baseId = import.meta.env.VITE_BASE_ID;
+    // const dataTable = import.meta.env.VITE_DATA_TABLE;
 
     const url = `https://api.airtable.com/v0/${baseId}/${dataTable}`;
 

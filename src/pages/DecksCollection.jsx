@@ -64,7 +64,7 @@ export default function DecksCollection (){
             if (response.ok) {
               const data = await response.json();
               
-              //* Tidy List of Cards from String to Array
+              //* Retreive and tidy List of Cards from String to Array
               const cards = data.records.map((record) => record.fields["List of Cards"]);
               const splitCardImages = cards.flat().map(cardImageUrlString => 
                 cardImageUrlString.split(',').map(cardImageUrl => cardImageUrl.trim()));

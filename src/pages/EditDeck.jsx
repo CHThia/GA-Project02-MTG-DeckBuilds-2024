@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 
 export default function EditDeck (){
 
-  const [searchCard, setSearchCard] = useState(""); 
-  const [cardImage, setCardImage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [addedCards, setAddedCards] = useState([]); 
-  const [deckName, setDeckName] = useState("");
-  
-  const [selectDeckName, setSelectDeckName] = useState([]);
+  const [searchCard, setSearchCard] = useState("")
+  const [cardImage, setCardImage] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [addedCards, setAddedCards] = useState([]) 
+  const [deckName, setDeckName] = useState("")
+  const [selectDeckName, setSelectDeckName] = useState([])
+  const [cardImageUrls, setcardImageUrls] = useState([])
 
 
+  //* Retrieve Deck Name 
   useEffect(() => {
     const getDeckNames = async () => {
     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
@@ -44,6 +45,47 @@ export default function EditDeck (){
     getDeckNames();
   }, []);
   
+
+  //* To show card images after selecting the Deck Set "Div"
+  useEffect(() => {
+    const getcardImageUrls = async () => {
+      if (deckName) {
+        const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
+        const baseId = 'appDX6At2SO9TJoNE';
+        const dataTable = 'tblEx46sKK00u8Tst';
+
+        const url = `https://api.airtable.com/v0/${baseId}/${dataTable}?filterByFormula=({Deck Name}="${deckName}")`;
+
+        try {
+          const response = await fetch(url, {
+            headers: {
+              'Authorization': `Bearer ${apiKey}`
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch deck cards from Airtable.');
+          }
+
+          const data = await response.json();
+          //* Retreive and tidy List of Cards from String to Array
+          const cards = data.records.map((record) => record.fields["List of Cards"]);
+          const splitCardImages = cards.flat().map(cardImageUrlString => 
+          cardImageUrlString.split(',').map(cardImageUrl => cardImageUrl.trim()));
+          const cardImagesArr = splitCardImages.flat();
+
+
+          // Update state with fetched card URLs
+          setcardImageUrls(cardImagesArr);
+        } catch (error) {
+          console.error('Error fetching deck card URLs:', error);
+        }
+      }
+    };
+
+    getcardImageUrls();
+  }, [deckName]);
+
 
   //* CHANGE TO UPDATE 
   const saveDeckToAirtable = async () => {
@@ -211,7 +253,7 @@ export default function EditDeck (){
         </div>
 
         {/* Create New Deck Card Slots */}
-        <CardSlots cardImages={addedCards} setAddedCards={setAddedCards} />
+        <CardSlots cardImages={cardImageUrls} setAddedCards={setAddedCards} />
 
         {/* Create New Deck Save Button */}
         <div className='btn-save-container'>

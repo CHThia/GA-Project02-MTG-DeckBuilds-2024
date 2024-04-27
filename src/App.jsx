@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import HomePage from './pages/Search';
+import HomePage from './pages/HomePage';
 import DecksCollection from './pages/DecksCollection';
 import CreateNewDeck from './pages/CreateNewDeck';
 import EditDeck from './pages/EditDeck';

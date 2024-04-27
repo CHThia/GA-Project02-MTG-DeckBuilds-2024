@@ -1,9 +1,5 @@
-//* MaterialUI Libaries
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
-import Box from '@mui/material/Box';
 import CardListPage from './CardListPage';
+import Search from '../components/Search'
 import { useState, useEffect } from 'react';
 
 
@@ -11,17 +7,14 @@ import { useState, useEffect } from 'react';
 export default function HomePage () {
   
   const [cardLists, setCardLists] = useState([]);
-  const [filterCardLists, SetfilterCardLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
 
   useEffect(() => {
     getAllCards(currentPage);
-    setCardLists(filterCardLists)
-  }, [currentPage, filterCardLists]);
-
-
+  }, [currentPage, totalPages]);
+  
   const getAllCards = async (page) => {
     const mtgUrl = `https://api.magicthegathering.io/v1/cards?page=${page}`;
 
@@ -42,6 +35,7 @@ export default function HomePage () {
           return true; // Retain Non-Duplicate Card
         }
       });
+      console.log("remove duplicate Cards:", reviseCardList)
 
       //* Set revise card list
       setCardLists(reviseCardList);
@@ -56,7 +50,7 @@ export default function HomePage () {
       console.error('Error fetching card list data:', error);
     }
   };
-
+  
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -70,19 +64,6 @@ export default function HomePage () {
     }
   };
 
-  const handleSearch = (event) => {
-    event.preventDefault()
-    const keyword = event.target.value.toLowerCase();
-    if (keyword === ''){
-      SetfilterCardLists(cardLists)
-    } else {
-      const filteredCards = cardLists.filter((card) => 
-        card.name.toLowerCase().includes(keyword)
-      );
-      setCardLists(filteredCards);
-    }
-  };
-  
 
   return (
     <>
@@ -90,34 +71,7 @@ export default function HomePage () {
         <h1>MTG Deck Builds</h1>
       </div>
 
-      <div className='search-input'>
-        <Stack sx={{ width: 500 }}>
-        
-          <Autocomplete
-            id="search-card"
-            getOptionLabel={(cardLists) => `${cardLists.name}`}
-            options={cardLists}
-            isOptionEqualToValue={(option, value) => 
-              option.name === value.name
-            }
-            noOptionsText={"There is no card of this name."}
-            renderOption={(props, cardLists) => (
-              <Box component="li" {...props} key={cardLists.id}>
-                {cardLists.name}
-              </Box>
-            )}
-            renderInput={(params) => 
-              <TextField {...params} 
-              label="Search Card..." 
-              onChange={handleSearch} 
-              />
-            }
-          />
-  
-        </Stack>
-      </div>   
-      
-      <hr/>
+      <Search cards={cardLists} setCards={setCardLists}  />
       
       <div className='card-list-container'>
         <div id='card-list'>
@@ -136,7 +90,6 @@ export default function HomePage () {
           disabled={currentPage === 1}>
             Previous Page
         </button>
-
         <button 
           style={{ width: "30%" }}
           onClick={handleNextPage} 

@@ -68,11 +68,13 @@ export default function HomePage () {
   return (
     <>
       <div className="title">
-        <h1>MTG Deck Builds</h1>
+        <h1>Magic The Gathering: Deck Builds</h1>
       </div>
 
       <Search cards={cardLists} setCards={setCardLists}  />
       
+      <hr/>
+
       <div className='card-list-container'>
         <div id='card-list'>
           {cardLists.map((cardlist, idx) => 

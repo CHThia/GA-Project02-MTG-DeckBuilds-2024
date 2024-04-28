@@ -1,5 +1,4 @@
-//* MaterialUI Libaries
-import { TextField, Select, InputLabel, MenuItem, Stack, Autocomplete } from '@mui/material';
+import { TextField, Select, InputLabel, MenuItem, Grid, FormControl, Autocomplete } from '@mui/material';
 
 import { useState, useEffect, useMemo } from 'react';
 
@@ -118,8 +117,9 @@ export default function Search ({cards, setCards}) {
   return (
     <>
       <div className='search-input'>
-        <Stack sx={{ width: 500 }}>
-
+        
+        <Grid container spacing={3} sx={{width:"100%", justifyContent:"Center", alignItems:"center"}}>
+          <Grid item xs={12} sm={3}>
           <Autocomplete
             id="search-name"
             options={nameOptions}
@@ -134,39 +134,45 @@ export default function Search ({cards, setCards}) {
               />
             }
           />
+          </Grid>  
 
-          <Autocomplete
-            id="search-setName"
-            options={editionOptions}
-            isOptionEqualToValue={(option, value) => 
-              option.name === value.name
-            }
-            inputValue={inputValues.name}
-            onInputChange={handleEditionSelect}
-            renderInput={(params) => 
-              <TextField {...params} 
-              label="Search Set Name..." 
-              />
-            }
-          />
+          <Grid item xs={12} sm={3}>
+            <Autocomplete
+              id="search-setName"
+              options={editionOptions}
+              isOptionEqualToValue={(option, value) => 
+                option.name === value.name
+              }
+              inputValue={inputValues.name}
+              onInputChange={handleEditionSelect}
+              renderInput={(params) => 
+                <TextField {...params} 
+                label="Search Set Name..." 
+                />
+              }
+            />
+          </Grid>
 
-          <InputLabel id="rarity">Rarity Types</InputLabel>
-          <Select
-            labelId="rarity"
-            id="search-rarity"
-            label="Rarity Types"
-            onChange={handleRaritySelect}
-            defaultValue=""
-          >
-            <MenuItem value='common'>Common</MenuItem>
-            <MenuItem value='uncommon'>Uncommon</MenuItem>
-            <MenuItem value='rare'>Rare</MenuItem>
-            <MenuItem value='mythic rare'>Mythic Rare</MenuItem>
-          </Select>
+          <Grid item xs={12} sm={3}>   
+          <FormControl sx={{ m: 1, minWidth: 150 }}>
+            <InputLabel id="rarity">Rarity Types</InputLabel>
+            <Select
+              labelId="rarity"
+              id="search-rarity"
+              label="Rarity Types"
+              onChange={handleRaritySelect}
+              defaultValue=""
+            >
+              <MenuItem value='common'>Common</MenuItem>
+              <MenuItem value='uncommon'>Uncommon</MenuItem>
+              <MenuItem value='rare'>Rare</MenuItem>
+              <MenuItem value='mythic rare'>Mythic Rare</MenuItem>
+            </Select>
+            </FormControl>
+          </Grid>
+        </Grid>        
 
-        </Stack>
-      </div>   
-
+      </div>         
     </>
   ) 
 }

@@ -118,7 +118,7 @@ export default function Search ({cards, setCards}) {
     <>
       <div className='search-input'>
         
-        <Grid container spacing={3} sx={{width:"100%", justifyContent:"Center", alignItems:"center"}}>
+        <Grid container spacing={3} sx={{width:"120%", justifyContent:"Center", alignItems:"center"}}>
           <Grid item xs={12} sm={3}>
           <Autocomplete
             id="search-name"

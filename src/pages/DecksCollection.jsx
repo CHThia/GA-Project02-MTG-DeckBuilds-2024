@@ -1,5 +1,6 @@
 import { useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom"
+import deckSetIcons from "/resources/deck-set-icon.png"
 
 
 export default function DecksCollection (){
@@ -101,6 +102,7 @@ export default function DecksCollection (){
 
   const handleDeckClick = (deckName) => {
     setSelectDeck(deckName);
+    console.log(deckName)
   }
 
   const cleanCardData = (cardObj) => {
@@ -184,26 +186,58 @@ export default function DecksCollection (){
           {/* To make an array of divs based on the number of data in airtable */}
           {allDecks.map((deckName, index) => (
             <div className="deck-grp" key={index} onClick={() => handleDeckClick(deckName)}>
-              <div className="deck-set"></div>
+              <div className="deck-set">
+                <img src={deckSetIcons} alt="Deck Icons" /> 
+              </div>
               <p className="icon-deck-name">{deckName}</p>
             </div>
           ))}
-
         </div>
 
-        <div className="show-save-deck">
-          <div className="card-container">
-            <div className="card-list">
-              {deckCards.length > 0 ? (
-                deckCards.map((cardUrl, index) => (
-                  <img src={cardUrl} alt={`Card ${index + 1}`} key={index} className="card-image" />
-                ))
-              ) : (
-                <p>No cards found for the selected deck.</p>
-              )}
+        <div className="center-layout">
+          <div className="instruction-container">
+            <div className="instruction-text">
+              <h2 style={{backgroundColor:"bisque", height:""}}>🧙 User Guide 🧙</h2>
+            </div>
+            <hr/>
+            <p id="intro-text"><b>Welcome to MTG Deck Builds!!</b>
+            <br/>
+              <br/>This is an unoffical MTG platform for <b>Building Decks</b> and 
+                   exploring different <b>Card Combos</b> for your next play or
+                   card purchases.
+              <br/> 
+              <br/>To begin, follow the instructions:</p>
+            <ol>
+              <li>Select and Click on the deck 🗃️ icons to see the list of saved cards.</li> 
+              <br/>
+              <li>With the deck selected, click Edit/Delete Button to edit changes or remove.</li>
+              <br/>
+              <li>To create New Deck, click on the CREATE DECKS on the NavBar to begin.</li>
+              <br/> 
+            </ol>
+            <p style={{textAlign:"center", fontSize:"20px"}}><b>Have fun building!!</b></p>
+
+          </div>
+
+          <div className="show-save-deck">
+            <div className="card-container">
+              <div className="card-list">
+                {deckCards.length > 0 ? (
+                  deckCards.map((cardUrl, index) => (
+                    <img src={cardUrl} alt={`Card ${index + 1}`} key={index} className="card-image" />
+                  ))
+                ) : (
+                  <p>No cards found for the selected deck.</p>
+                )}
+              </div>
             </div>
           </div>
+
+          <div className="deck-name">
+            <h1 id="select-deck-name">You have selected: {selectDeck}</h1>
+          </div>
         </div>
+
 
         <div className="btn-delete-container">
           <button id="edit-btn" onClick={handleEditDeck}>Edit Deck</button>

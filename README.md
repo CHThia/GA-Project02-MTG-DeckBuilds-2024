@@ -96,7 +96,7 @@ during the development phase but generally majority remains as it is.
     <img width="650" src="/resources/MTG-DeckBuilds-Wireframe.png">
 </p>
 
-## Challenges during the making of this game
+## Challenges during the making of this application
 <ul>
   <li> Transferring and retrieval of data from AirTable. 
   <li> Setting up the right data types in the Airtable.

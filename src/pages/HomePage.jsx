@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 export default function HomePage () {
   
-  const [cardLists, setCardLists] = useState([]);
+  const [cardLists, setCardLists] = useState([]); // Lifting-State for <Search> & <CardListPage> components
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 

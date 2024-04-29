@@ -80,11 +80,13 @@ https://mtg-deck-builds.vercel.app/
 </ul>
 
 ## Application Add-On (next version update)
-<li>To have a “Liked Cards” section (Can be called “COLLECTION”)
-<li>Note-taking panel in “Edit Builds” for commenting, e.g. “Need more power hitters...”
-<li>More possibility for Filtering Search Options e.g. By Color, By Artist, By Strength.
-<li>Toggle add button to increase Deck Size (player who uses more than 60 cards)
+<ul>
+  <li>To have a “Liked Cards” section (Can be called “COLLECTION”)
+  <li>Note-taking panel in “Edit Builds” for commenting, e.g. “Need more power hitters...”
+  <li>More possibility for Filtering Search Options e.g. By Color, By Artist, By Strength.
+  <li>Toggle add button to increase Deck Size (player who uses more than 60 cards)
 <li>Improve Visual Design and UX
+</ul>
 
 ## Wireframe of the game during planning stage
 Below is the initial wireframe for this application. Some design layout were adjusted slightly 
@@ -95,13 +97,13 @@ during the development phase but generally majority remains as it is.
 </p>
 
 ## Challenges during the making of this game
-<ol>
+<ul>
   <li> Transferring and retrieval of data from AirTable. 
   <li> Setting up the right data types in the Airtable.
   <li> Taking Data Objects from API and append it to another Div Element (e.g. Add Card to empty slot in the Create New Deck Page)
   <li> Adding pagination for home page as the API source restrict the return of results to 100 cards for each call.
   <li> Passing selected deck's data from Decks Page to Edit Page  
-<ol>
+</ul>
 
 
 ## Key Learning points
@@ -112,6 +114,7 @@ during the development phase but generally majority remains as it is.
 </ol>
 
 ## Credit(s)
-<li> Freepik (https://www.freepik.com/author/freepik)
-<li> Unofficial Magic: The Gathering API (https://magicthegathering.io/)
-
+<ul>
+  <li> Freepik (https://www.freepik.com/author/freepik)
+  <li> Unofficial Magic: The Gathering API (https://magicthegathering.io/)
+</ul>

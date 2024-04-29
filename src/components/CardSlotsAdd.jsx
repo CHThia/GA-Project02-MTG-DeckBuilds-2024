@@ -1,7 +1,8 @@
 
 export default function CardSlotsAdd ({ cardImages, setAddedCards }) {
 
-  const handleRemoveCard = (index) => {
+  const handleRemoveCard = (event, index) => {
+    event.preventDefault()
     const newCardImages = [...cardImages];
     newCardImages.splice(index, 1);
     setAddedCards(newCardImages)
@@ -16,7 +17,7 @@ export default function CardSlotsAdd ({ cardImages, setAddedCards }) {
           <img src={cardImages[i]} 
             alt={`Card ${i + 1}`} 
             className="card-slot"
-            onClick={() => handleRemoveCard(i)}
+            onClick={(event) => handleRemoveCard(event, i)}
           />
         ) : (
           "Empty Slot"

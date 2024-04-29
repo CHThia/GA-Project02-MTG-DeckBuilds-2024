@@ -17,7 +17,7 @@ export default function CardSlotsEdit ({ cardImageUrls, setcardImageUrls }) {
           <img src={cardImageUrls[i]} 
             alt={`Card ${i + 1}`} 
             className="card-slot"
-            onClick={(e) => handleRemoveCard(e, i)}
+            onClick={(event) => handleRemoveCard(event, i)}
           />
         ) : (
           "Empty Slot"

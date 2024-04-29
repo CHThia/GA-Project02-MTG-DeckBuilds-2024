@@ -1,6 +1,7 @@
-import { useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"
 import deckSetIcons from "/resources/deck-set-icon.png"
+
 
 
 export default function DecksCollection (){
@@ -35,6 +36,7 @@ export default function DecksCollection (){
             if (response.ok) {
                 const data = await response.json();
 
+                //* Get all "Save" Deck Name from AirTable
                 const deckNames = data.records.map((record) => record.fields["Deck Name"]);
                 setAllDecks(deckNames);
                 navigate(`/decks/${deckNames[0]}`)
@@ -78,13 +80,13 @@ export default function DecksCollection (){
     
             if (response.ok) {
               const data = await response.json();
-
+              
               const cardImagesArr = cleanCardData(data.records[0])
-              setDeckCards(cardImagesArr);
+              setDeckCards(cardImagesArr); // get card images url data
               navigate(`/decks/${selectDeck}`)
               let listOfCardImages = cleanCardData(data.records[0])
               data.records[0]['fields']['List of Cards'] = listOfCardImages 
-              setSelectedDeckData(data.records[0])
+              setSelectedDeckData(data.records[0]) // get full record of deck data
 
               console.log('All card-images retreived from Airtable is successfully.');
             } else {
@@ -164,8 +166,8 @@ export default function DecksCollection (){
           console.log(`Deck '${selectDeck}' deleted successfully.`);
           // Update state to remove the deleted deck
           setAllDecks(prevDecks => prevDecks.filter(deck => deck !== selectDeck));
-          setSelectDeck(null);
-          setDeckCards([]);
+          setSelectDeck(null); // Reset; No deck selected after delete
+          setDeckCards([]); // Reset; No showing of cards after delete
         } else {
           console.error('Failed to delete deck from Airtable:', deleteResponse.statusText);
         }
@@ -183,7 +185,7 @@ export default function DecksCollection (){
       <div className="deck-collection-body">
 
         <div className="deck-library-container">
-          {/* To make an array of divs based on the number of data in airtable */}
+          {/* To make an array of saved decks based on the number of data in airtable */}
           {allDecks.map((deckName, index) => (
             <div className="deck-grp" key={index} onClick={() => handleDeckClick(deckName)}>
               <div className="deck-set">
@@ -227,12 +229,13 @@ export default function DecksCollection (){
                     <img src={cardUrl} alt={`Card ${index + 1}`} key={index} className="card-image" />
                   ))
                 ) : (
-                  <p>No cards found for the selected deck.</p>
+                  <p id="notification">Select a deck to see the list of cards.</p>
                 )}
               </div>
             </div>
           </div>
 
+          {/* Notify user which deck was selected */}
           <div className="deck-name">
             <h1 id="select-deck-name">You have selected: {selectDeck}</h1>
           </div>

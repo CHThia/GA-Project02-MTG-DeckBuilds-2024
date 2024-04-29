@@ -1,5 +1,5 @@
 import CardSlotsEdit from '../components/CardSlotsEdit';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom'
 
 
@@ -15,8 +15,8 @@ export default function CreateNewDeck (){
   const [cardImageUrls, setcardImageUrls] = useState(state.deckData.fields['List of Cards'])
 
 
-  
-  //* CHANGE TO UPDATE
+
+  //* UPDATE Deck after user make changes
   const updateDeckToAirtable = async () => {
     const apiKey = 'pat6QkNwJX0WR859A.d3064ffa2324742e57995d79c52a033bce10ce0c17374ed6b9d87ae14ea4c77f';
     const baseId = 'appDX6At2SO9TJoNE';
@@ -57,13 +57,15 @@ export default function CreateNewDeck (){
 };
 
 
-  //* Fetch Card based on card name input 
-  useEffect(() => {
-  
-    
-  }, [searchCard, isLoading, cardImageUrls, addedCards]);
-  
   const getCardData = async () => {
+
+    if(!searchCard) {
+      setCardImage("")
+      setIsLoading(false)
+      return
+    }
+
+    setIsLoading(true)
 
     const mtgUrl = `https://api.magicthegathering.io/v1/cards?name=${encodeURIComponent(searchCard)}`;
     try {
@@ -77,7 +79,7 @@ export default function CreateNewDeck (){
       if (data.cards && data.cards.length > 0) {
         setCardImage(data.cards[0].imageUrl); // Show Card Image if there is result
       } else {
-        setCardImage(""); // Clear Card Image if not result
+        setCardImage(""); // Clear Card Image if no result
       }
 
     } catch (error) {
@@ -86,6 +88,7 @@ export default function CreateNewDeck (){
       setIsLoading(false)
     }
   };
+
 
   const handleSearchCard = (event) => {
     event.preventDefault()
@@ -103,10 +106,11 @@ export default function CreateNewDeck (){
     event.preventDefault();
     if (cardImage) {
       setAddedCards([...addedCards, cardImage]);
-      let currentArr = cardImageUrls
+      let currentArr = cardImageUrls // Current Card List in deck
+      // console.log('Current List', cardImageUrls, cardImageUrls.length)
       let newArr = [...currentArr, cardImage]
-      setcardImageUrls(newArr)
-      console.log('t', cardImageUrls, cardImageUrls.length)
+      setcardImageUrls(newArr) // Updated Card List in deck
+      // console.log('Update List', newArr, newArr.length)
     }
   };
 
@@ -118,9 +122,6 @@ export default function CreateNewDeck (){
 
   return (
     <>
-      {/* To be removed */}
-      <p style={{textAlign:"center"}}>Edit Deck</p>
-
       <div className='main-body'>
 
         {/* Search Deck & Search Card */}

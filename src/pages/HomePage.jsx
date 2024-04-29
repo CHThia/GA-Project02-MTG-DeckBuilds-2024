@@ -11,8 +11,9 @@ export default function HomePage () {
   const [totalPages, setTotalPages] = useState(0);
 
 
+  
   useEffect(() => {
-    getAllCards(currentPage);
+    getAllCards(currentPage, totalPages);
   }, [currentPage, totalPages]);
   
   const getAllCards = async (page) => {
@@ -42,15 +43,17 @@ export default function HomePage () {
       
 
       // Extract pagination information from headers (Recommended by MTG Provider)
-      const linkHeader = res.headers.get('Link');
-      const lastPage = linkHeader.match(/page=(\d+)>; rel="last"/);
+      const linkHeader = res.headers.get('Link'); // get next and last page from API
+      const lastPage = linkHeader.match(/page=(\d+)>; rel="last"/); // store data of previous page
       const totalPages = lastPage ? parseInt(lastPage[1]) : 1;
       setTotalPages(totalPages);
+      
     } catch (error) {
       console.error('Error fetching card list data:', error);
     }
   };
   
+
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {

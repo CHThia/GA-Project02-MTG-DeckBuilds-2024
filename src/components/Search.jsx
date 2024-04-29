@@ -1,6 +1,6 @@
 import { TextField, Select, InputLabel, MenuItem, Grid, FormControl, Autocomplete } from '@mui/material';
-
 import { useState, useEffect, useMemo } from 'react';
+
 
 
 export default function Search ({cards, setCards}) {
@@ -35,6 +35,7 @@ export default function Search ({cards, setCards}) {
           return true; // Retain Non-Duplicate Edition Set
         }
       });
+
       // console.log("remove duplicate Sets:", reviseEditionList)
       let namesOnly = reviseEditionList.map(list => list.name)
 
@@ -47,6 +48,7 @@ export default function Search ({cards, setCards}) {
   }
 
 
+  //* Debounce Setup 
   const debounce = (callback, wait) => {
     let timeoutId = null;
     return (...args) => {
@@ -57,25 +59,7 @@ export default function Search ({cards, setCards}) {
     };
   }
 
-  
-  const handleNameSelect = useMemo (
-    () => debounce((event, newVal) => {
-      event.preventDefault()
-      setInputValues({...inputValues, 'name':newVal})
-      getCardsByQuery('name', newVal)
-      let listOfNames = cards.map(card => card.name)
-      console.log('name', listOfNames)
-      setNameOptions(listOfNames)
-    }, 500), [cards]
-  )
-
-  
-  const handleRaritySelect = (event) => {
-    setInputValues({...inputValues, 'rarity':event.target.value})
-    getCardsByQuery('rarity', event.target.value)
-  }
-
-
+  //* Get Edition Sets from the Database
   const handleEditionSelect = useMemo (
     () => debounce((event, newVal) => {
       event.preventDefault()
@@ -84,8 +68,22 @@ export default function Search ({cards, setCards}) {
       let listOfName = cards.map(card => card.name)
       setNameOptions(listOfName)
     }, 500), [inputValues])
-
   
+    
+    //* Delay card name search with debounce by 0.5s
+    const handleNameSelect = useMemo (
+      () => debounce((event, newVal) => {
+      event.preventDefault()
+      setInputValues({...inputValues, 'name':newVal}) 
+      getCardsByQuery('name', newVal)
+      let listOfNames = cards.map(card => card.name)
+      // console.log('name', listOfNames)
+      setNameOptions(listOfNames)
+    }, 500), [cards]
+  )
+  
+
+  //* For fetching Rarity types from API
   const getCardsByQuery = async (category, value) => {
     const mtgSetUrl = `https://api.magicthegathering.io/v1/cards?${category}=${encodeURIComponent(value)}`;
     try {
@@ -112,7 +110,13 @@ export default function Search ({cards, setCards}) {
         console.log(error)
     }
   }
-
+  
+  //* Get rarity types from the Database
+  const handleRaritySelect = (event) => {
+    setInputValues({...inputValues, 'rarity':event.target.value})
+    getCardsByQuery('rarity', event.target.value)
+  }
+  
 
   return (
     <>

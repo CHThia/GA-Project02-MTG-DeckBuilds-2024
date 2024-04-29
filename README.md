@@ -88,7 +88,7 @@ https://mtg-deck-builds.vercel.app/
 <li>Improve Visual Design and UX
 </ul>
 
-## Wireframe of the game during planning stage
+## Wireframe of the application during planning stage
 Below is the initial wireframe for this application. Some design layout were adjusted slightly 
 during the development phase but generally majority remains as it is.
 

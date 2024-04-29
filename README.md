@@ -24,30 +24,34 @@ Therefore, with the available MTG APIs, I have decided to make this application 
 ## How to use this application
 
 <h3>Home Page</h3>
-In the home page, user are given a few filtering options to search the cards they need. I have only created 3 options as of now but will add more in future updates. The 3 search filters are Search by Card Name, Search by Set Name and Search by Rarity Types. In addition, user can click on any card in the list to view an enlarge version of the card image or flip through the huge list by clicking the Previous / Next Page Buttons which is located at the bottom of the screen. Lastly, the Navigation Bar at the top of the screen allows user to toggle between pages.
+
+<p>In the home page, user are given a few filtering options to search the cards they need. I have only created 3 options as of now but will add more in future updates. The 3 search filters are Search by Card Name, Search by Set Name and Search by Rarity Types. In addition, user can click on any card in the list to view an enlarge version of the card image or flip through the huge list by clicking the Previous / Next Page Buttons which is located at the bottom of the screen. Lastly, the Navigation Bar at the top of the screen allows user to toggle between pages.</p>
 
   <p align="center">
       <img width="650" src="/resources/home-page.PNG">
   </p>
 
 <h3>Decks Page</h3>
-For the deck page, user will be able to view the collection of Saved Decks where each of them will show the cards inside it.
-To reveal it accordingly, the user just need to click on the <b>Cards Icon</b> and all the cards will show up from that selected deck. Secondly, the Saved Decks can be Updated or Remove from the collection by clicking the <b>Edit or Remove button</b> located at the bottom of the screen.
+
+<p>For the deck page, user will be able to view the collection of Saved Decks where each of them will show the cards inside it.
+To reveal it accordingly, the user just need to click on the <b>Cards Icon</b> and all the cards will show up from that selected deck. Secondly, the Saved Decks can be Updated or Remove from the collection by clicking the <b>Edit or Remove button</b> located at the bottom of the screen.</p>
 
   <p align="center">
       <img width="650" src="/resources/decks-page.PNG">
   </p>
 
 <h3>Create New Deck Page</h3>
-This page is for user to build their deck from scratch. Firstly, the user has to input the Deck Name. After that, he/she can begin searching for cards from the Search Input and click on the <b>Add Card button</b> to populate the selected card into the empty slot. Once user is satisfy with their deck builds, he/she can click on the <b>Save Deck Button</b> to store the data and come back to review it another time if needed.
+
+<p>This page is for user to build their deck from scratch. Firstly, the user has to input the Deck Name. After that, he/she can begin searching for cards from the Search Input and click on the <b>Add Card button</b> to populate the selected card into the empty slot. Once user is satisfy with their deck builds, he/she can click on the <b>Save Deck Button</b> to store the data and come back to review it another time if needed.</p>
 
   <p align="center">
       <img width="650" src="/resources/create-new-deck-page.PNG">
   </p>
 
 <h3>Edit Page</h3>
-Last but not least, the edit page can only be access from the Decks Page as mention earlier. This allows flexibility for user
-to modified their current decks. Almost like the Create Deck Page, the user can search, add or remove cards from the current list and update it into the database by clicking the <b>Save Deck Button</b>.
+
+<p>Last but not least, the edit page can only be access from the Decks Page as mention earlier. This allows flexibility for user
+to modified their current decks. Almost like the Create Deck Page, the user can search, add or remove cards from the current list and update it into the database by clicking the <b>Save Deck Button</b>.</p>
 
   <p align="center">
       <img width="650" src="/resources/edit-deck-page.PNG">
